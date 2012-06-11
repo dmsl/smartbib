@@ -1,12 +1,12 @@
-Publication-Parser-and-Beautifier
+SmartBIB
 =================================
 
-Parsing publications from a BibTex file and elegantly presenting those publications to the end user.
+The SmartBIB Project allows you to present a BIB database on the web. It is ideal for personal websites.
 
 Demo
 ====
 
-Visit: http://bibtex-parser.herokuapp.com/
+http://dmsl.github.com/smartbib/
 
 Usage
 =====
@@ -136,6 +136,8 @@ Available BibTex Fields:
     'series'
     'linebegin'
     'lineend'
+	'durl'
+	'powerpoint'
     
 Beautification configuration:
 ======================
@@ -156,20 +158,22 @@ Beautification configuration:
   Full Example:
     
     ```php
-    $inproceedings = array("title", "author", "year", "In", "booktitle", "(", "series", ") ", "location", "publisher", "address", "Article ", "articleno", "numpages"," pages. ", "DOI=", "doi", "url");
+    $inproceedings = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
     ```
 
-2. Please insert a `type` field for each item in your BibTex file.
+2. Please insert a `type`, `durl` or `powerpoint` field for each item in your BibTex file as desired.
 
 3. Those types will be fildered according the following HTML code:
 
     ```html
     <ul id="publication-filter">
-      <li><a href="#" class="current" data-filter="*">All</a></li>
-      <li><a href="#" data-filter=".journals">Journals</a></li>
-      <li><a href="#" data-filter=".conferences">Conference and Workshop Proceedings</a></li>
-      <li><a href="#" data-filter=".demos">Demonstrations</a></li>
-      <li><a href="#" data-filter=".technical">Technical Reports</a></li>
+		<li><a href="#" class="current" data-filter="*">All</a></li>
+		<li><a href="#" data-filter=".book">Book Chapters</a></li>
+		<li><a href="#" data-filter=".journal">Journal</a></li>
+		<li><a href="#" data-filter=".conference">Conference and Workshop Proceedings</a></li>
+		<li><a href="#" data-filter=".demo">Demonstrations</a></li>
+		<li><a href="#" data-filter=".technical">Technical Reports</a></li>
+		<li><a href="#" data-filter=".other">Other</a></li>
     </ul>
     ```
     
@@ -180,6 +184,9 @@ Credits:
 ========
 
 + Data Management Systems Laboratory, University of Cyprus
++ Georgios Larkou (http://www.cs.ucy.ac.cy/~glarko01/)
 + Isotope jQuery (http://isotope.metafizzy.co/)
 + (Modified) BuddyPress BibTex Parser (https://github.com/scholarpress/buddypress-courseware/blob/master/bibliography/bibtex-parser.class.php)
-+ Georgios Larkou (http://www.cs.ucy.ac.cy/~glarko01/)
++ Fancybox (http://fancybox.net/) 
++ Tipsy (http://onehackoranother.com/projects/jquery/tipsy/)
+
