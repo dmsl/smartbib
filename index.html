@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css">
 	
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="javascripts/highlight.pack.js"></script>
     <title>SmartBIB</title>
     <script type="text/javascript">
@@ -47,25 +46,25 @@
         
         1. Insert the following code:
         
-        <pre><code class="xml">        
-       	<div class="publications"> 
-            <h3 class="main-heading"><span>Publications</span></h3>
-            <ul id="publication-filter">
-              <li><a href="#" class="current" data-filter="*">All</a></li>
-              <li><a href="#" data-filter=".journals">Journals</a></li>
-              <li><a href="#" data-filter=".conferences">Conference and Workshop Proceedings</a></li>
-              <li><a href="#" data-filter=".demos">Demonstrations</a></li>
-              <li><a href="#" data-filter=".technical">Technical Reports</a></li>
-            </ul>
-            <div style="clear:both;"></div>
-            <ul id="publication-list">
-                <?php            
+        <pre><code class="php">        
+        &lt;div class="publications"> 
+            &lt;h3 class="main-heading">&lt;span>Publications&lt;/span>&lt;/h3>
+            &lt;ul id="publication-filter">
+              &lt;li>&lt;a href="#" class="current" data-filter="*">All&lt;/a>&lt;/li>
+              &lt;li>&lt;a href="#" data-filter=".journals">Journals&lt;/a>&lt;/li>
+              &lt;li>&lt;a href="#" data-filter=".conferences">Conference and Workshop Proceedings&lt;/a>&lt;/li>
+              &lt;li>&lt;a href="#" data-filter=".demos">Demonstrations&lt;/a>&lt;/li>
+              &lt;li>&lt;a href="#" data-filter=".technical">Technical Reports&lt;/a>&lt;/li>
+            &lt;/ul>
+            &lt;div style="clear:both;">&lt;/div>
+            &lt;ul id="publication-list">
+                &lt;?php            
                     /*
                         Available Fields: 
-                        
+        
                         The field TYPE will be used for data-filtering. If it is not available then the item will be 
                         marked as uncategorised.
-                        
+        
                         'note' 
                         'abstract'
                         'year'
@@ -94,22 +93,22 @@
                         'lineend'
                         'durl'
                         'powerpoint'
-                    
+        
                     */
-                    
+        
                     /* 
                         Define the format that will be used for printing each bibtex item.
                         If a you desire to print a string infront of a field please use the following format:
-                        
+        
                         article = array("title", "author", "string", "bibtex field");
-                        
+        
                         eg.
-                        
+        
                         article = array("title", "author", "Num. Of pages", "pages");
-                        
+        
                         Please modify the example below as desired  is presented bellow. 
                     */
-                    
+        
                     $article = array();
                     $book = array();
                     $booklet = array();
@@ -125,27 +124,104 @@
                     $techreport = array();
                     $unpublished = array();
                     $other = array();
-                    
+        
                     /* 
                         Delimiter for Seperating each bibtex field
                     */
-                    
+        
                     $delimiter = '.';
-                                    
-                    include './bibtex/BibTex.php';  			
-                    
+        
+                    include './bibtex/BibTex.php';              
+        
                     $bibTexFile = './bibtex/demo.bib';
-                    
+        
                     $bibTex = new BibTeX_Parser();
                     $bibTex->parser($file = $bibTexFile); 
                 ?>
-              <div class="clear"></div>
-            </ul>
-          </div>
+              &lt;div class="clear">&lt;/div>
+            &lt;/ul>
+          &lt;/div>
           
         </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+		<h3>Available BibTex Fields:</h3>
+        
+        <pre><code>
+        'note' 
+        'abstract'
+        'year'
+        'group'
+        'publisher'
+        'location'
+        'articleno'
+        'numpages'
+        'page-start'
+        'page-end'
+        'pages'
+        'address'
+        'url'
+        'doi'
+        'volume'
+        'chapter'
+        'journal'
+        'author'
+        'raw'
+        'title'
+        'booktitle'
+        'folder'
+        'type'
+        'series'
+        'linebegin'
+        'lineend'
+        'durl'
+        </code></pre>
+        
+        <h3>Configuration</h3>
+        
+        <ul>
+        	<li>
+            	<p>Define the format that will be used for printing each bibtex item.</p>
+
+				<p>If a you desire to print a string infront of a field please use the following format:</p>
+                
+                <pre><code>
+                 	article = array("title", "author", "string", "bibtex field");
+                </code></pre>
+                
+                <p>eg.</p>
+                
+                <pre><code>
+                	article = array("title", "author", "Num. Of pages", "pages");
+                </code></pre>
+                
+                <p>Full Example:</p>
+                
+                <pre><code>
+                	$inproceedings = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
+                </code></pre>
+            </li>
+            <li>
+            	<p>Please insert a <strong>type</strong>, <strong>durl</strong> or <strong>powerpoint</strong> field for each item in your BibTex file as desired.</p>
+            </li>
+            <li>
+            	<p>Those types will be fildered according the following HTML code:</p>
+                <pre><code>
+                 &lt;ul id="publication-filter">
+                        &lt;li>&lt;a href="#" class="current" data-filter="*">All&lt;/a>&lt;/li>
+                        &lt;li>&lt;a href="#" data-filter=".book">Book Chapters&lt;/a>&lt;/li>
+                        &lt;li>&lt;a href="#" data-filter=".journal">Journal&lt;/a>&lt;/li>
+                        &lt;li>&lt;a href="#" data-filter=".conference">Conference and Workshop Proceedings&lt;/a>&lt;/li>
+                        &lt;li>&lt;a href="#" data-filter=".demo">Demonstrations&lt;/a>&lt;/li>
+                        &lt;li>&lt;a href="#" data-filter=".technical">Technical Reports&lt;/a>&lt;/li>
+                        &lt;li>&lt;a href="#" data-filter=".other">Other&lt;/a>&lt;/li>
+                    &lt;/ul>
+                </code></pre>
+            </li>
+            <li>
+            	<p>For example an item with <strong>type = { journal }</strong> in your BibTex will be filtered when Journals link is clicked.</p>
+            </li>
+        </ul>
+        
 		<h3>Demonstration.</h3>
 
         <div id="root">
