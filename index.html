@@ -5,8 +5,11 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="SmartBIB : The SmartBIB Project allows you to present a BIB database on the web. It is ideal for personal websites." />
+    
+    <script type="text/javascript" src="javascripts/highlight.pack.js"></script>
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css">
 
     <title>SmartBIB</title>
     <script type="text/javascript">
@@ -15,6 +18,7 @@
 			document.getElementById('root').style.height = (parseInt(newHeight,10)) * 4 + 10 + 'px';
 		}
     </script>
+    <script>hljs.initHighlightingOnLoad();</script>
   </head>
 
   <body>
@@ -37,14 +41,110 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h3>Usage.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+        <p>In order to use SmartBIB please follow the steps provided bellow:</p>
+        
+        1. Insert the following code:
+        
+        <pre><code>
+        
+       	<div class="publications"> 
+            <h3 class="main-heading"><span>Publications</span></h3>
+            <ul id="publication-filter">
+              <li><a href="#" class="current" data-filter="*">All</a></li>
+              <li><a href="#" data-filter=".journals">Journals</a></li>
+              <li><a href="#" data-filter=".conferences">Conference and Workshop Proceedings</a></li>
+              <li><a href="#" data-filter=".demos">Demonstrations</a></li>
+              <li><a href="#" data-filter=".technical">Technical Reports</a></li>
+            </ul>
+            <div style="clear:both;"></div>
+            <ul id="publication-list">
+                <?php            
+                    /*
+                        Available Fields: 
+                        
+                        The field TYPE will be used for data-filtering. If it is not available then the item will be 
+                        marked as uncategorised.
+                        
+                        'note' 
+                        'abstract'
+                        'year'
+                        'group'
+                        'publisher'
+                        'location'
+                        'articleno'
+                        'numpages'
+                        'page-start'
+                        'page-end'
+                        'pages'
+                        'address'
+                        'url'
+                        'doi'
+                        'volume'
+                        'chapter'
+                        'journal'
+                        'author'
+                        'raw'
+                        'title'
+                        'booktitle'
+                        'folder'
+                        'type'
+                        'series'
+                        'linebegin'
+                        'lineend'
+                        'durl'
+                        'powerpoint'
+                    
+                    */
+                    
+                    /* 
+                        Define the format that will be used for printing each bibtex item.
+                        If a you desire to print a string infront of a field please use the following format:
+                        
+                        article = array("title", "author", "string", "bibtex field");
+                        
+                        eg.
+                        
+                        article = array("title", "author", "Num. Of pages", "pages");
+                        
+                        Please modify the example below as desired  is presented bellow. 
+                    */
+                    
+                    $article = array();
+                    $book = array();
+                    $booklet = array();
+                    $conference = array();
+                    $inbook = array();
+                    $incollection = array();
+                    $inproceedings = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
+                    $manual = array();
+                    $mastersthesis = array();
+                    $misc = array();
+                    $phdthesis = array();
+                    $proceedings = array();
+                    $techreport = array();
+                    $unpublished = array();
+                    $other = array();
+                    
+                    /* 
+                        Delimiter for Seperating each bibtex field
+                    */
+                    
+                    $delimiter = '.';
+                                    
+                    include './bibtex/BibTex.php';  			
+                    
+                    $bibTexFile = './bibtex/demo.bib';
+                    
+                    $bibTex = new BibTeX_Parser();
+                    $bibTex->parser($file = $bibTexFile); 
+                ?>
+              <div class="clear"></div>
+            </ul>
+          </div>
+          
+        </code></pre>
 
 <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 		<h3>Demonstration.</h3>
