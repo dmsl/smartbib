@@ -272,7 +272,7 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 800px;
+  max-width: 850px;
   padding: 20px 10px;
   margin: 0 auto;
 }
@@ -372,6 +372,26 @@ Full-Width Styles
 
 #footer_wrap {
   background: #212121;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+/* iframe's parent node */
+div#root {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+
+/* iframe itself */
+div#root > iframe {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: none;
 }
 
 
