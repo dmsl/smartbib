@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Beautiful Publications From BibTeX</title>
     <script type="text/javascript" src="js/jquery.min.js"></script> 
-    <script type="text/javascript" src="js/jquery.isotope.min.js"></script> 
+    <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
     <script type="text/javascript" src="js/jquery.tipsy.js"></script> 
     <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>   
     <script type="text/javascript" src="js/custom.js"></script>

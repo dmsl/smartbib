@@ -232,7 +232,7 @@ class BibTeX_Parser
 	
 	function htmlPublication($type, $fields, $element) {
 		global $delimiter; 
-		echo '<li class="'.$this->items['type'][$element].'">';        
+		echo '<li class="'.$this->items['type'][$element].'" title="'.$this->items['year'][$element].'">';        
 		$this->countTypes($element, $this->items['type'][$element]);         
 		foreach($fields as $print) {
 			if(isset($this->items[$print])){
@@ -290,7 +290,13 @@ class BibTeX_Parser
 		$all = array_count_values($this->items['type']);
 		
 		$number = $all[$type] - $counts[$type] + 1;
-		echo "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
+		if($type == 'book') {
+			echo "<strong>[BC".$number."]</strong> ";
+
+		}
+		else {
+			echo "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
+		}
 	}
 }
 ?>

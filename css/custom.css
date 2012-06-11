@@ -45,3 +45,12 @@ li {
 	height: 20px;
 	background: url('../images/ppt.gif') no-repeat 0px 3px;
 }
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
