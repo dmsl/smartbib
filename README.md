@@ -57,6 +57,8 @@ Usage
                 'series'
                 'linebegin'
                 'lineend'
+				'durl'
+				'powerpoint'
             
             */
             
@@ -79,7 +81,7 @@ Usage
             $conference = array();
             $inbook = array();
             $incollection = array();
-            $inproceedings = array("title", "author", "year", "In", "booktitle", "(", "series", ") ", "location", "publisher", "address", "Article ", "articleno", "numpages"," pages. ", "DOI=", "doi", "url");
+            $inproceedings = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
             $manual = array();
             $mastersthesis = array();
             $misc = array();
