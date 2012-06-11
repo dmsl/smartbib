@@ -9,9 +9,15 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>SmartBIB</title>
+    <script type="text/javascript">
+		function resizeIframe(newHeight)
+		{
+			document.getElementById('root').style.height = parseInt(newHeight,10) + 10 + 'px';
+		}
+    </script>
   </head>
 
-  <body>
+  <body onload='parent.resizeIframe(document.body.scrollHeight)'>
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
