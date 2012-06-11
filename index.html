@@ -14,7 +14,7 @@
     <script type="text/javascript">
 		function resizeIframe(newHeight)
 		{
-			document.getElementById('root').style.height = (parseInt(newHeight,10)) *2  + 10 + 'px';
+			document.getElementById('root').style.height = (parseInt(newHeight,10)) * 1.2  + 200 + 'px';
 		}
     </script>
     <script>hljs.initHighlightingOnLoad();</script>
@@ -40,6 +40,10 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
+      	<center><p><img src="images/dmsl7.png" width="200" height="150" align="absmiddle"></p></center>
+      	<center><p><strong>Data Management Systems Laboratory</strong></p></center>
+        <center><p><strong>University of Cyprus</strong></p></center>
+        <center><p><strong>Georgios Larkou <a href="http://cs.ucy.ac.cy/~glarko01">http://cs.ucy.ac.cy/~glarko01</a></strong></p></center>        
         <h3>Usage.</h3>
 
         <p>In order to use SmartBIB please follow the steps provided bellow:</p>
@@ -222,7 +226,17 @@
             </li>
         </ul>
         
-		<h3>Demonstration.</h3>
+        <h3>Credits</h3>
+        
+        <ul>
+        	<li>Data Management Systems Laboratory, University of Cyprus
+            </li>
+            <li>
+            	Georgios Larkou (<a href ="http://cs.ucy.ac.cy/~glarko01">http://cs.ucy.ac.cy/~glarko01</a>)
+            </li>
+        </ul>
+        
+		<h3>Demonstration</h3>
 
         <div id="root">
             <iframe src="http://bibtex-parser.herokuapp.com/" onload='parent.resizeIframe(document.body.scrollHeight)'>
