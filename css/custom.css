@@ -1,0 +1,47 @@
+/* CSS Document */
+
+.publications {
+	width: 97%;
+}
+
+#publication-filter{
+	list-style-type: none;
+}
+
+li {
+	float: left;
+	margin: 0px 5px;
+}
+
+#publication-list li {
+	list-style-type: none;
+	width: 900px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.publications-pdf {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url('../images/pdf.gif') no-repeat 0px 3px;
+}
+
+.publications-bib {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url('../images/bib.gif') no-repeat 0px 3px;
+}
+
+.publications-ref {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url('../images/references.gif') no-repeat 0px 3px;
+}
+.publications-ppt {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url('../images/ppt.gif') no-repeat 0px 3px;
+}
