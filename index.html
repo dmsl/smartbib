@@ -12,12 +12,12 @@
     <script type="text/javascript">
 		function resizeIframe(newHeight)
 		{
-			document.getElementById('root').style.height = parseInt(newHeight,10) + 10 + 'px';
+			document.getElementById('root').style.height = (parseInt(newHeight,10)) * 4 + 10 + 'px';
 		}
     </script>
   </head>
 
-  <body onload='parent.resizeIframe(document.body.scrollHeight)'>
+  <body>
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -50,7 +50,7 @@ $ git checkout gh-pages
 		<h3>Demonstration.</h3>
 
         <div id="root">
-            <iframe src="http://bibtex-parser.herokuapp.com/">
+            <iframe src="http://bibtex-parser.herokuapp.com/" onload='parent.resizeIframe(document.body.scrollHeight)'>
                 Your browser does not support inline frames.
             </iframe>
         </div>
