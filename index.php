@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Beautiful Publications From BibTeX</title>
-    <script type="text/javascript" src="js/jquery.min.js"></script> 
+	<script type="text/javascript" src="js/jquery.min.js"></script> 
     <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
     <script type="text/javascript" src="js/jquery.tipsy.js"></script> 
     <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>   
@@ -17,12 +17,19 @@
     <h3 class="main-heading"><span>Publications</span></h3>
     <ul id="publication-filter">
       <li><a href="#" class="current" data-filter="*">All</a></li>
-      <li><a href="#" data-filter=".book">Book Chapters</a></li>
-      <li><a href="#" data-filter=".journal">Journal</a></li>
-      <li><a href="#" data-filter=".conference">Conference and Workshop Proceedings</a></li>
-      <li><a href="#" data-filter=".demo">Demonstrations</a></li>
-      <li><a href="#" data-filter=".technical">Technical Reports</a></li>
-      <li><a href="#" data-filter=".other">Other</a></li>
+      <li><a href="#" data-filter=".2012">2012</a></li>
+      <li><a href="#" data-filter=".2011">2011</a></li>
+      <li><a href="#" data-filter=".2010">2010</a></li>
+      <li><a href="#" data-filter=".2009">2009</a></li>
+      <li><a href="#" data-filter=".2008">2008</a></li>
+      <li><a href="#" data-filter=".2007">2007</a></li>
+      <li><a href="#" data-filter=".2006">2006</a></li>
+      <li><a href="#" data-filter=".2005">2005</a></li>
+      <li><a href="#" data-filter=".2004">2004</a></li>
+      <li><a href="#" data-filter=".2003">2003</a></li>
+      <li><a href="#" data-filter=".2002">2002</a></li>
+      <li><a href="#" data-filter=".2001">2001</a></li>
+      <li><a href="#" data-filter=".2000">2000</a></li>
     </ul>
     <div style="clear:both;"></div>
     <ul id="publication-list">
@@ -99,6 +106,9 @@
             */
             
             $delimiter = '.';
+			
+			$sortby = array('book', 'journal', 'conference', 'demo','technical', 'other');
+			$sortbyTitle = array('Book Chapter', 'Journal', 'Conference and Workshop Proceedings', 'Demonstrations', 'Technical Reports', 'Other');
                             
             include './bibtex/BibTex.php';				
             

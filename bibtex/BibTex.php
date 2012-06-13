@@ -6,9 +6,12 @@ class BibTeX_Parser
 {
     var $count;
     var $items;
+	var $sortedItems;
     var $types;
     var $filename;
     var $inputdata;
+	var $yearData;
+	var $lastType;
     
     /**
      * BibTeX_Parser( $file, $data )
@@ -56,6 +59,10 @@ class BibTeX_Parser
         
         // Oh, what the heck!
         $this->parse();
+		
+		global $sortby;
+		//$this->sortedItems = $this->sort_by($this -> items, $sortby, 'type');
+		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'type', $sortby);
 		
 		return $this->printPublications();
     }
@@ -226,42 +233,48 @@ class BibTeX_Parser
 					break;
 				default:
 					$this->htmlPublication("other", $other, $i);
-			}	
+				
+			}
 		}
 	}
 	
 	function htmlPublication($type, $fields, $element) {
 		global $delimiter; 
-		echo '<li class="'.$this->items['type'][$element].'" title="'.$this->items['year'][$element].'">';        
-		$this->countTypes($element, $this->items['type'][$element]);         
+		global $sortbyTitle;
+		if ($this->lastType != $this->sortedItems['type'][$element]){
+			$this->lastType = $this->sortedItems['type'][$element];
+			echo '<li class="category-title">'.$this->getTitle($this->sortedItems['type'][$element]).'</li>';
+		}
+		echo '<li class="'.$this->sortedItems['year'][$element].'" title="'.$this->sortedItems['year'][$element].'">';        
+		$this->countTypes($element, $this->sortedItems['type'][$element]);         
 		foreach($fields as $print) {
-			if(isset($this->items[$print])){
-				if(isset($this->items[$print][$element])){
+			if(isset($this->sortedItems[$print])){
+				if(isset($this->sortedItems[$print][$element])){
 					switch ($print) {
 						case "title":
 							echo '<strong>';
-							if(isset($this->items['durl'][$element])){ 
-								echo '<a href="'.$this->items['durl'][$element].'">';
+							if(isset($this->sortedItems['durl'][$element])){ 
+								echo '<a href="'.$this->sortedItems['durl'][$element].'">';
 							} 
-							echo $this->items[$print][$element];
-							if (isset($this->items['durl'][$element])) {
+							echo $this->sortedItems[$print][$element];
+							if (isset($this->sortedItems['durl'][$element])) {
 								echo '</a>';
 							}
 							echo '</strong>'.$delimiter.' ';
 							break;
 						case "year":
-							echo "<strong>".$this->items[$print][$element]."</strong>".$delimiter." ";
+							echo "<strong>".$this->sortedItems[$print][$element]."</strong>".$delimiter." ";
 							break;
 						case "numpages":
-							echo $this->items[$print][$element]." pages";
+							echo $this->sortedItems[$print][$element]." pages";
 						case "pages":
-							echo "Pages: ".$this->items[$print][$element].". ";
+							echo "Pages: ".$this->sortedItems[$print][$element].". ";
 							break;
 						case "series":
-							echo "(".$this->items[$print][$element].")";
+							echo "(".$this->sortedItems[$print][$element].")";
 							break;
 						default:
-							echo $this->items[$print][$element].$delimiter." ";
+							echo $this->sortedItems[$print][$element].$delimiter." ";
 					}
 				}
 			}
@@ -269,25 +282,25 @@ class BibTeX_Parser
 				echo $print;	
 			}
 		}
-		if (isset($this->items['raw'][$element])) {
+		if (isset($this->sortedItems['raw'][$element])) {
 			echo '<a href="#bibtex-'.$element.'" class="publications-bib" title="BibTex" id="publink-'.$element.'" href="#" title="BibTex Reference"></a>';
-			echo '<div id="bibtex-wrapper" style="display:none;"><div id="bibtex-'.$element.'" style="width:700px;"><pre>'.$this->items['raw'][$element].'</pre></div></div>';
+			echo '<div id="bibtex-wrapper" style="display:none;"><div id="bibtex-'.$element.'" style="width:700px;"><pre>'.$this->sortedItems['raw'][$element].'</pre></div></div>';
 		}
-		if (isset($this->items['durl'][$element])) {
+		if (isset($this->sortedItems['durl'][$element])) {
 			echo '<a href="#download-'.$element.'" class="publications-pdf" id="publink-'.$element.'" href="#" title="Download PDF"></a>';
-			echo '<div id="pdf-wrapper" style="display:none;"><div id="download-'.$element.'"><embed src="'.$this->items['durl'][$element].'"  type="application/pdf" width="840" height="680" /></div></div>';
+			echo '<div id="pdf-wrapper" style="display:none;"><div id="download-'.$element.'"><embed src="'.$this->sortedItems['durl'][$element].'"  type="application/pdf" width="840" height="680" /></div></div>';
 		}
-		if (isset($this->items['powerpoint'][$element])) {
-			echo '<a href="'.$this->items['powerpoint'][$element].'" class="publications-ppt" id="publink-'.$element.'" href="#" title="Presentation" target="_blank"></a>';
-			echo '<div id="ppt-wrapper" style="display:none;"><div id="powerpoint-'.$element.'"><embed src="'.$this->items['powerpoint'][$element].'"  type="application/ppt" width="840" height="680" /></div></div>';
+		if (isset($this->sortedItems['powerpoint'][$element])) {
+			echo '<a href="'.$this->sortedItems['powerpoint'][$element].'" class="publications-ppt" id="publink-'.$element.'" href="#" title="Presentation" target="_blank"></a>';
+			echo '<div id="ppt-wrapper" style="display:none;"><div id="powerpoint-'.$element.'"><embed src="'.$this->sortedItems['powerpoint'][$element].'"  type="application/ppt" width="840" height="680" /></div></div>';
 		}
 		echo '</li>';
 	}
 	
 	function countTypes($iterator, $type) {
-		$previous = array_slice($this->items['type'], 0, $iterator + 1, true);
+		$previous = array_slice($this->sortedItems['type'], 0, $iterator + 1, true);
         $counts = array_count_values($previous);
-		$all = array_count_values($this->items['type']);
+		$all = array_count_values($this->sortedItems['type']);
 		
 		$number = $all[$type] - $counts[$type] + 1;
 		if($type == 'book') {
@@ -297,6 +310,51 @@ class BibTeX_Parser
 		else {
 			echo "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
 		}
+	}
+	function sort_by($arr, $sub, $order){
+		// Create a map from old key to new key
+		$value_kmap = array_flip($arr[$sub]);
+		$sort_kmap = array_flip($order);
+		foreach($order as $value)
+			$kmap[$value_kmap[$value]] = $sort_kmap[$value];
+	
+		// Create your result array
+		foreach($arr as $name => $sub_arr)
+			foreach($kmap as $key => $new_key)
+				if(isset($sub_arr[$key]))
+					$result[$name][$new_key] = $sub_arr[$key];
+	
+		return $result;
+	}
+	/**
+	 * @param array $array
+	 * @param string|int $by key/offset
+	 * @param array $order
+	 * @return array
+	 */
+	function array_multisort_by_order(array $array, $by, array $order)
+	{
+		$order = array_flip($order);
+		$sort = $array[$by];
+		foreach($sort as &$v) $v = $order[$v];
+		$params[] = &$sort;
+		foreach($array as &$v) $params[] =&$v; unset($v);
+		call_user_func_array('array_multisort', $params);
+		return $array;
+	}
+	
+	function getTitle ($type) {
+		global $sortby;
+		global $sortbyTitle;
+		
+		$array_size = count($sortby);
+		for($i = 0; $i < $array_size; $i++)
+		{
+			if( $sortby[$i] == $type){
+				return $sortbyTitle[$i];
+			}
+		}
+		
 	}
 }
 ?>

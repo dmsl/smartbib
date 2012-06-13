@@ -54,3 +54,8 @@ li {
   pointer-events: none;
   z-index: 1;
 }
+.category-title {
+	text-align: center;
+	font-weight: bold;
+	background:	#EFEFEF;
+}

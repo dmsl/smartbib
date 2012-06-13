@@ -8,14 +8,7 @@ jQuery(document).ready(function(){
 		animationOptions	: {
 								duration			: 750,
 								easing				: 'linear',		
-	   						},
-		getSortData 		: {  year : function ( $elem ) {
-      								return parseInt($elem.attr('title'),10);
-								}
-							  },
-		sortBy 				: 'year',
-		sortAscending 		: false,
-		queue				: false
+	   						}
 	});	
 	
 	$filter.find('a').click(function(){
