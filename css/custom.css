@@ -2,6 +2,7 @@
 
 .publications {
 	width: 97%;
+	margin:30px;
 }
 
 #publication-filter{
@@ -15,9 +16,8 @@ li {
 
 #publication-list li {
 	list-style-type: none;
-	width: 720px;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	width: 90%;
+	padding: 20px;
 }
 .publications-pdf {
 	display: inline-block;

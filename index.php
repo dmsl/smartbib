@@ -85,21 +85,21 @@
                 Please modify the example below as desired  is presented bellow. 
             */
             
-            $article = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $book = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $booklet = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $conference = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $inbook = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $incollection = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $inproceedings = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $manual = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $mastersthesis = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $misc = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $phdthesis = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $proceedings = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $techreport = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $unpublished = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
-            $other = array("title", "author", "year", "In ", "booktitle", "series", "pages" , "location", "publisher", "address","url");
+            $article = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $book = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $booklet = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $conference = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $inbook = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $incollection = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $inproceedings = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $manual = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $mastersthesis = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $misc = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $phdthesis = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $proceedings = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $techreport = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $unpublished = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $other = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
             
             /* 
                 Delimiter for Seperating each bibtex field

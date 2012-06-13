@@ -268,10 +268,16 @@ class BibTeX_Parser
 						case "numpages":
 							echo $this->sortedItems[$print][$element]." pages";
 						case "pages":
-							echo "Pages: ".$this->sortedItems[$print][$element].". ";
+							echo " Pages: ".$this->sortedItems[$print][$element].". ";
 							break;
 						case "series":
 							echo "(".$this->sortedItems[$print][$element].")";
+							break;
+						case "isbn":
+							echo " ISBN ".$this->sortedItems[$print][$element].". ";
+							break;
+						case "volume":
+							echo " Volume ".$this->sortedItems[$print][$element].". ";
 							break;
 						default:
 							echo $this->sortedItems[$print][$element].$delimiter." ";
