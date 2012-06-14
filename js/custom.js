@@ -5,6 +5,7 @@ jQuery(document).ready(function(){
 		  
 	$container.isotope({
 		filter				: '*',
+		layoutMode			: 'straightDown',
 		animationOptions	: {
 								duration			: 750,
 								easing				: 'linear',		
@@ -40,5 +41,6 @@ jQuery(document).ready(function(){
 		'scrolling'			:	'no', 
 		'overlayOpacity'	:   0.6
 	});
-	$(".publications-ppt").unbind('click.fb')
+	$(".publications-ppt").unbind('click.fb');
+	$(".publications-pdf").unbind('click.fb');
 });	

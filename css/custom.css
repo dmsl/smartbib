@@ -1,11 +1,16 @@
 /* CSS Document */
 
+body { 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+
 .publications {
-	width: 97%;
 	margin:30px;
 }
 
 #publication-filter{
+	padding: 0px;
 	list-style-type: none;
 }
 
@@ -14,10 +19,15 @@ li {
 	margin: 0px 5px;
 }
 
+#publication-list {
+	padding: 0px;
+}
+
 #publication-list li {
 	list-style-type: none;
-	width: 90%;
-	padding: 20px;
+	width: 95%;
+	margin-left: 1em;
+	margin-bottom: 1em;
 }
 .publications-pdf {
 	display: inline-block;
@@ -57,5 +67,4 @@ li {
 .category-title {
 	text-align: center;
 	font-weight: bold;
-	background:	#EFEFEF;
 }

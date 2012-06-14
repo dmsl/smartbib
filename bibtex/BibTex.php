@@ -60,6 +60,9 @@ class BibTeX_Parser
         // Oh, what the heck!
         $this->parse();
 		
+		$this->yearData = array_unique($this->items['year']);
+		rsort($this->yearData);
+		
 		global $sortby;
 		//$this->sortedItems = $this->sort_by($this -> items, $sortby, 'type');
 		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'type', $sortby);
@@ -164,7 +167,7 @@ class BibTeX_Parser
                 $v=str_replace('\'',' ',$v);
                 $v=str_replace('\"',' ',$v);
                 // test!
-                $v=str_replace('`',' ',$v);
+                $v=str_replace('`',' \'',$v);
                 $v=trim($v);
                 $this->items["$var[$fieldcount]"][$this->count]="$v";
             }
@@ -187,6 +190,17 @@ class BibTeX_Parser
 		global $techreport;
 		global $unpublished;
 		global $other;
+		
+		//Print filters 
+		echo '<ul id="publication-filter">';
+		echo '<li><a href="#" class="current" data-filter="*">All</a></li>';
+		for($i = 0; $i < count($this->yearData); $i++) {
+			echo '<li><a href="#" data-filter=".'.$this->yearData[$i].'">'.$this->yearData[$i].'</a></li>';
+		}
+		echo '</ul>';
+  		echo '<div style="clear:both;"></div>';
+    	echo '<ul id="publication-list">';
+		
 		for ($i = 0; $i <= $this->count; $i++ ) {
 			switch ($this->types[$i]) {
 				case "article":
@@ -236,14 +250,18 @@ class BibTeX_Parser
 				
 			}
 		}
+		echo '</ul>';
+		echo '<center><small>Automatically generated from this <a href="bibtex/demo.bib">bibtex</a> using the <a target=_blank href="http://dmsl.github.com/smartbib/">Smarbib</a> project</small></center>';
 	}
 	
 	function htmlPublication($type, $fields, $element) {
 		global $delimiter; 
 		global $sortbyTitle;
+		$delimiter=", ";
 		if ($this->lastType != $this->sortedItems['type'][$element]){
 			$this->lastType = $this->sortedItems['type'][$element];
-			echo '<li class="category-title">'.$this->getTitle($this->sortedItems['type'][$element]).'</li>';
+			#echo '<li class="category-title">'.$this->getTitle($this->sortedItems['type'][$element]).'</li>';
+	echo '<h2>'.$this->getTitle($this->sortedItems['type'][$element]).'</h2>';
 		}
 		echo '<li class="'.$this->sortedItems['year'][$element].'" title="'.$this->sortedItems['year'][$element].'">';        
 		$this->countTypes($element, $this->sortedItems['type'][$element]);         
@@ -254,33 +272,39 @@ class BibTeX_Parser
 						case "title":
 							echo '<strong>';
 							if(isset($this->sortedItems['durl'][$element])){ 
-								echo '<a href="'.$this->sortedItems['durl'][$element].'">';
+								echo '"<a href="'.$this->sortedItems['durl'][$element].'">';
 							} 
 							echo $this->sortedItems[$print][$element];
 							if (isset($this->sortedItems['durl'][$element])) {
-								echo '</a>';
+								echo '</a>"';
 							}
 							echo '</strong>'.$delimiter.' ';
 							break;
+						case "booktitle":
+							echo "<i>".$this->sortedItems[$print][$element]."</i> ";
+							break;
+						case "journal":
+							echo "<i>".$this->sortedItems[$print][$element]."</i> ";
+							break;
 						case "year":
-							echo "<strong>".$this->sortedItems[$print][$element]."</strong>".$delimiter." ";
+							echo "<strong>".$this->sortedItems[$print][$element]."</strong>".".";
 							break;
 						case "numpages":
-							echo $this->sortedItems[$print][$element]." pages";
+							echo $this->sortedItems[$print][$element].$delimiter;
 						case "pages":
-							echo " Pages: ".$this->sortedItems[$print][$element].". ";
+							echo " Pages: ".$this->sortedItems[$print][$element].$delimiter;
 							break;
 						case "series":
-							echo "(".$this->sortedItems[$print][$element].")";
+							echo "(<b>".$this->sortedItems[$print][$element]."</b>)".$delimiter;
 							break;
 						case "isbn":
-							echo " ISBN ".$this->sortedItems[$print][$element].". ";
+							echo " ISBN: ".$this->sortedItems[$print][$element].$delimiter;
 							break;
 						case "volume":
-							echo " Volume ".$this->sortedItems[$print][$element].". ";
+							echo " Volume ".$this->sortedItems[$print][$element].$delimiter;
 							break;
 						default:
-							echo $this->sortedItems[$print][$element].$delimiter." ";
+							echo $this->sortedItems[$print][$element].$delimiter;
 					}
 				}
 			}
@@ -293,8 +317,7 @@ class BibTeX_Parser
 			echo '<div id="bibtex-wrapper" style="display:none;"><div id="bibtex-'.$element.'" style="width:700px;"><pre>'.$this->sortedItems['raw'][$element].'</pre></div></div>';
 		}
 		if (isset($this->sortedItems['durl'][$element])) {
-			echo '<a href="#download-'.$element.'" class="publications-pdf" id="publink-'.$element.'" href="#" title="Download PDF"></a>';
-			echo '<div id="pdf-wrapper" style="display:none;"><div id="download-'.$element.'"><embed src="'.$this->sortedItems['durl'][$element].'"  type="application/pdf" width="840" height="680" /></div></div>';
+			echo '<a href="'.$this->sortedItems['durl'][$element].'" class="publications-pdf" id="publink-'.$element.'" href="#" title="Download PDF" target="_blank"></a>';
 		}
 		if (isset($this->sortedItems['powerpoint'][$element])) {
 			echo '<a href="'.$this->sortedItems['powerpoint'][$element].'" class="publications-ppt" id="publink-'.$element.'" href="#" title="Presentation" target="_blank"></a>';
