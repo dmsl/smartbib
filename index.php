@@ -14,9 +14,7 @@
 </head>
 <body>
 	<h1><a href="http://www.cs.ucy.ac.cy/~dzeina/" target="_blank">Demetris Zeinalipour's</a> Publications</h1>
-        <?php    
-			error_reporting(E_ALL);
-			ini_set('display_errors', '1');
+        <?php
 			        
             /*
                 Available Fields: 
@@ -50,6 +48,10 @@
                 'series'
                 'linebegin'
                 'lineend'
+				'durl',
+				'powerpoint',
+				'infosite',
+				'website'
             
             */
             
@@ -88,12 +90,21 @@
             
             $delimiter = '.';
 			
-			//Enter fields equivalent to type field in the BibTex file to sort the bibtex entries in categories. Bellow each type enter the title which will be presented as the category title.
+			/*
+			
+			Enter fields equivalent to type field in the BibTex file to sort the bibtex entries in categories. Bellow each type enter the title which will be presented as the category title.
+			
+			*/
+			
 			$sortby = array('editorial','book', 'journal', 'conference','theses', 'gconferences');
 			$sortbyTitle = array('Editorials','Book Chapters', 'Journals and magazine papers', 'Conference and Workshop Papers', 'Theses', 'Greek Conferences');
                             
             include './bibtex/BibTex.php';				
+            /* 
             
+			Enter the location of your BibTex file
+            
+			*/
             $bibTexFile = './bibtex/demo.bib';
             
             $bibTex = new BibTeX_Parser();
