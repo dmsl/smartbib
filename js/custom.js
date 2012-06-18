@@ -17,10 +17,10 @@ jQuery(document).ready(function(){
 		$container.isotope({ 
 		filter				: selector,
 		animationOptions	: {
-		duration			: 750,
-		easing				: 'linear',
-		queue				: false,
-	   }
+			duration			: 750,
+			easing				: 'linear',
+			queue				: false,
+		   }
 	  });
 	  return false;
 	});	
@@ -41,6 +41,8 @@ jQuery(document).ready(function(){
 		'scrolling'			:	'no', 
 		'overlayOpacity'	:   0.6
 	});
+	$(".series-link").unbind('click.fb');
 	$(".publications-ppt").unbind('click.fb');
 	$(".publications-pdf").unbind('click.fb');
+	$(".publications-website").unbind('click.fb');
 });	

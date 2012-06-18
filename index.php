@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/fancybox.css"/>
 </head>
 <body>
-	<h1><a href="../">Demetris Zeinalipour's</a> Publications</h1>
+	<h1><a href="http://www.cs.ucy.ac.cy/~dzeina/" target="_blank">Demetris Zeinalipour's</a> Publications</h1>
         <?php    
 			error_reporting(E_ALL);
 			ini_set('display_errors', '1');

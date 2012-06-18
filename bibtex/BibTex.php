@@ -50,7 +50,8 @@ class BibTeX_Parser
             'lineend' => array(),
 			'durl' => array(),
 			'powerpoint' => array(),
-			'infosite' => array()
+			'infosite' => array(),
+			'website' => array()
         );
         
         if( $file )
@@ -285,16 +286,15 @@ class BibTeX_Parser
 							echo '</strong>'.$delimiter.' ';
 							break;
 						case "booktitle":
-							if(isset($this->sortedItems['infosite'][$element]))
-								echo "<i><strong><u><a href='".$this->sortedItems['infosite'][$element]."'>".$this->sortedItems[$print][$element]."</a></u></strong></i> ";
-							else 
-								echo "<i><strong><u>".$this->sortedItems[$print][$element]."</u></strong></i> ";
+							if($this->sortedItems['type'][$element] == "editorial") {
+								echo "<i>\"".$this->sortedItems[$print][$element]."\"</i> ";
+							}
+							else {
+								echo "<i>".$this->sortedItems[$print][$element]."</i> ";
+							}
 							break;
 						case "journal":
-							if(isset($this->sortedItems['infosite'][$element]))
-								echo "<i><strong><u><a href='".$this->sortedItems['infosite'][$element]."'>".$this->sortedItems[$print][$element]."</a></u></strong></i> ";
-							else 
-								echo "<i><strong><u>".$this->sortedItems[$print][$element]."</u></strong></i> ";
+							echo "<i>".$this->sortedItems[$print][$element]."</i> ";
 							break;
 						case "year":
 							echo "<strong>".$this->sortedItems[$print][$element]."</strong>".".";
@@ -305,7 +305,10 @@ class BibTeX_Parser
 							echo " Pages: ".$this->sortedItems[$print][$element].$delimiter;
 							break;
 						case "series":
-							echo "(<b>".$this->sortedItems[$print][$element]."</b>)".$delimiter;
+							if(isset($this->sortedItems['infosite'][$element]))
+								echo "( <i><strong><u><a href='".$this->sortedItems['infosite'][$element]."' class='series-link' target='_blank'>".$this->sortedItems[$print][$element]."</a></u></strong></i> ) ";
+							else 
+								echo "<i><strong>".$this->sortedItems[$print][$element]."</strong></i> ";
 							break;
 						case "isbn":
 							echo " ISBN: ".$this->sortedItems[$print][$element].$delimiter;
@@ -341,6 +344,9 @@ class BibTeX_Parser
 		if (isset($this->sortedItems['powerpoint'][$element])) {
 			echo '<a href="'.$this->sortedItems['powerpoint'][$element].'" class="publications-ppt" id="publink-'.$element.'" href="#" title="Presentation" target="_blank"></a>';
 			echo '<div id="ppt-wrapper" style="display:none;"><div id="powerpoint-'.$element.'"><embed src="'.$this->sortedItems['powerpoint'][$element].'"  type="application/ppt" width="840" height="680" /></div></div>';
+		}
+		if (isset($this->sortedItems['website'][$element])) {
+			echo '<a href="'.$this->sortedItems['website'][$element].'" class="publications-website" id="publink-'.$element.'" href="#" title="Relevant Website" target="_blank"></a>';
 		}
 		echo '</li>';
 	}

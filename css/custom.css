@@ -1,7 +1,6 @@
 /* CSS Document */
 
 body { 
-	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 }
 
@@ -56,6 +55,13 @@ li {
 	background: url('../images/ppt.gif') no-repeat 0px 3px;
 }
 
+.publications-website {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url('../images/website.png') no-repeat 0px 3px;
+}
+
 .isotope-item {
   z-index: 2;
 }
@@ -67,4 +73,30 @@ li {
 .category-title {
 	text-align: center;
 	font-weight: bold;
+}
+
+.isotope,
+.isotope .isotope-item {
+  /* change duration value to whatever you like */
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:         top, left, opacity;
+          transition-property:         transform, opacity;
 }
