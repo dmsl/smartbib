@@ -50,6 +50,7 @@ class BibTeX_Parser
             'lineend' => array(),
 			'durl' => array(),
 			'powerpoint' => array(),
+			'infosite' => array()
         );
         
         if( $file )
@@ -163,7 +164,10 @@ class BibTeX_Parser
                 $v=str_replace('=','',$v);
                 $v=str_replace('{','',$v);
                 $v=str_replace('}','',$v);
-                $v=str_replace(',',' ',$v);
+				if ($var[$fieldcount]=='author' || $var[$fieldcount]=='location' ) 
+                	$v=str_replace(',',', ',$v);
+				else
+					$v=str_replace(',',' ',$v);
                 $v=str_replace('\'',' ',$v);
                 $v=str_replace('\"',' ',$v);
                 // test!
@@ -281,10 +285,16 @@ class BibTeX_Parser
 							echo '</strong>'.$delimiter.' ';
 							break;
 						case "booktitle":
-							echo "<i>".$this->sortedItems[$print][$element]."</i> ";
+							if(isset($this->sortedItems['infosite'][$element]))
+								echo "<i><strong><u><a href='".$this->sortedItems['infosite'][$element]."'>".$this->sortedItems[$print][$element]."</a></u></strong></i> ";
+							else 
+								echo "<i><strong><u>".$this->sortedItems[$print][$element]."</u></strong></i> ";
 							break;
 						case "journal":
-							echo "<i>".$this->sortedItems[$print][$element]."</i> ";
+							if(isset($this->sortedItems['infosite'][$element]))
+								echo "<i><strong><u><a href='".$this->sortedItems['infosite'][$element]."'>".$this->sortedItems[$print][$element]."</a></u></strong></i> ";
+							else 
+								echo "<i><strong><u>".$this->sortedItems[$print][$element]."</u></strong></i> ";
 							break;
 						case "year":
 							echo "<strong>".$this->sortedItems[$print][$element]."</strong>".".";
@@ -302,6 +312,15 @@ class BibTeX_Parser
 							break;
 						case "volume":
 							echo " Volume ".$this->sortedItems[$print][$element].$delimiter;
+							break;
+						case "chapter":
+							echo " Chapter ".$this->sortedItems[$print][$element].$delimiter;
+							break;
+						case "author":
+							echo $this->sortedItems[$print][$element]." ";
+							break;
+						case "location":
+							echo $this->sortedItems[$print][$element]." ";
 							break;
 						default:
 							echo $this->sortedItems[$print][$element].$delimiter;
@@ -333,7 +352,7 @@ class BibTeX_Parser
 		
 		$number = $all[$type] - $counts[$type] + 1;
 		if($type == 'book') {
-			echo "<strong>[BC".$number."]</strong> ";
+			echo "<strong>[B".$number."]</strong> ";
 
 		}
 		else {

@@ -71,16 +71,16 @@
             $booklet = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
             $conference = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
             $inbook = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
-            $incollection = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
-            $inproceedings = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
+            $incollection = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "chapter", "pages", "address", "isbn", "year");
+            $inproceedings = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "chapter", "pages", "address", "isbn", "year");
             $manual = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
             $mastersthesis = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
             $misc = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
-            $phdthesis = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
-            $proceedings = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
-            $techreport = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
-            $unpublished = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
-            $other = array("title", "author", "year", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn");
+            $phdthesis = array("title", "author", "journal", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
+            $proceedings = array("booktitle", "series", "author", "location", "publisher", "volume", "pages", "address", "isbn", "year");
+            $techreport = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
+            $unpublished = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
+            $other = array("title", "author", "booktitle", "series", "location", "publisher", "volume", "pages", "address", "isbn", "year");
             
             /* 
                 Delimiter for Seperating each bibtex field
@@ -89,8 +89,8 @@
             $delimiter = '.';
 			
 			//Enter fields equivalent to type field in the BibTex file to sort the bibtex entries in categories. Bellow each type enter the title which will be presented as the category title.
-			$sortby = array('book', 'journal', 'conference', 'demo','technical', 'other');
-			$sortbyTitle = array('Book Chapters', 'Journals', 'Conferences and Workshop Proceedings', 'Demonstrations', 'Technical Reports', 'Others');
+			$sortby = array('editorial','book', 'journal', 'conference','theses', 'gconferences');
+			$sortbyTitle = array('Editorials','Book Chapters', 'Journals and magazine papers', 'Conference and Workshop Papers', 'Theses', 'Greek Conferences');
                             
             include './bibtex/BibTex.php';				
             
