@@ -87,6 +87,7 @@ class BibTeX_Parser
 		
 		global $sortby;
 		//$this->sortedItems = $this->sort_by($this -> items, $sortby, 'type');
+		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'year', $this->yearData);
 		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'type', $sortby);
 		
 		return $this->printPublications();
@@ -383,21 +384,6 @@ class BibTeX_Parser
 		else {
 			echo "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
 		}
-	}
-	function sort_by($arr, $sub, $order){
-		// Create a map from old key to new key
-		$value_kmap = array_flip($arr[$sub]);
-		$sort_kmap = array_flip($order);
-		foreach($order as $value)
-			$kmap[$value_kmap[$value]] = $sort_kmap[$value];
-	
-		// Create your result array
-		foreach($arr as $name => $sub_arr)
-			foreach($kmap as $key => $new_key)
-				if(isset($sub_arr[$key]))
-					$result[$name][$new_key] = $sub_arr[$key];
-	
-		return $result;
 	}
 	/**
 	 * @param array $array
