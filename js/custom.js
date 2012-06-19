@@ -30,7 +30,7 @@ jQuery(document).ready(function(){
 	$container.isotope({
 		filter				: '*',
 		layoutMode			: 'straightDown',
-		animationEngine 	: 'css',
+		animationEngine 	: 'css'
 	});	
 	
 	$filter.find('a').click(function(){
