@@ -26,6 +26,10 @@
 	margin:30px;
 }
 
+.publication {
+	padding-left: 15px;
+}
+
 #publication-filter{
 	padding: 0px;
 	list-style-type: none;
