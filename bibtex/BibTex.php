@@ -287,7 +287,7 @@ class BibTeX_Parser
 			$this->lastType = $this->sortedItems['type'][$element];
 			echo '<li><h2>'.$this->getTitle($this->sortedItems['type'][$element]).'</h2></li>';
 		}
-		echo '<li class="'.$this->sortedItems['year'][$element].'" title="'.$this->sortedItems['year'][$element].'">';        
+		echo '<li class="'.$this->sortedItems['year'][$element].' publication" title="'.$this->sortedItems['year'][$element].'">';        
 		$this->countTypes($element, $this->sortedItems['type'][$element]);         
 		foreach($fields as $print) {
 			if(isset($this->sortedItems[$print])){
