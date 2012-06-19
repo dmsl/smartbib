@@ -79,17 +79,17 @@ class BibTeX_Parser
         elseif( $data )
             $this->inputdata = $data;
         
-        // Oh, what the heck!
         $this->parse();
 		
 		$this->yearData = array_unique($this->items['year']);
 		rsort($this->yearData);
 		
 		global $sortby;
-		//$this->sortedItems = $this->sort_by($this -> items, $sortby, 'type');
-		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'year', $this->yearData);
-		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'type', $sortby);
 		
+		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'year', $this->yearData);
+		
+		$this->sortedItems = $this->array_multisort_by_order($this->items, 'type', $sortby);
+
 		return $this->printPublications();
     }
 
@@ -113,8 +113,10 @@ class BibTeX_Parser
             return;
     
         foreach($lines as $line) {
-            $lineindex++;
+			$lineindex++;
+			if ($this->count > -1) {
             $this->items['lineend'][$this->count] = $lineindex;
+			}
             $line = trim($line);
             $raw_line = $line + '\n';
             $line=str_replace("'","`",$line);
@@ -170,8 +172,10 @@ class BibTeX_Parser
                 else
                     $value[$fieldcount]=substr($seg,$ps,$pe);
             } else {
+				if ($this->count > -1 ) {
                 $this->items['raw'][$this->count] .= $line . "\r\n";
                 $pe=strpos($seg,'},');
+				}
                 
                 if ($fieldcount > -1) {
                     if ($pe===false)
@@ -385,6 +389,23 @@ class BibTeX_Parser
 			echo "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
 		}
 	}
+	
+	function sort_by($arr, $sub, $order){
+		// Create a map from old key to new key
+		$value_kmap = array_flip($arr[$sub]);
+		$sort_kmap = array_flip($order);
+		foreach($order as $value)
+			$kmap[$value_kmap[$value]] = $sort_kmap[$value];
+	
+		// Create your result array
+		foreach($arr as $name => $sub_arr)
+			foreach($kmap as $key => $new_key)
+				if(isset($sub_arr[$key]))
+					$result[$name][$new_key] = $sub_arr[$key];
+	
+		return $result;
+	}
+	
 	/**
 	 * @param array $array
 	 * @param string|int $by key/offset
@@ -393,12 +414,19 @@ class BibTeX_Parser
 	 */
 	function array_multisort_by_order(array $array, $by, array $order)
 	{
+		 $max = max(array_map('count',$array));
+		foreach($array as &$sub){
+			$addin = array_diff_key(array_fill(0,$max,null),$sub);
+			$sub = $addin + $sub;
+			ksort($sub);
+		}
 		$order = array_flip($order);
-		$sort = $array[$by];
-		foreach($sort as &$v) $v = $order[$v];
-		$params[] = &$sort;
-		foreach($array as &$v) $params[] =&$v; unset($v);
+		$params[] = $array[$by];
+		foreach($params[0] as &$v) $v = $order[$v];
+		foreach($array as &$v) $params[] = &$v; unset($v);
 		call_user_func_array('array_multisort', $params);
+		$filter = create_function('$a','return !is_null($a);');
+		foreach($array as &$sub) $sub = array_filter($sub,$filter);
 		return $array;
 	}
 	
