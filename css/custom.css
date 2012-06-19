@@ -35,7 +35,7 @@
 	list-style-type: none;
 }
 
-li {
+#publication-filter li {
 	float: left;
 	margin: 0px 5px;
 }
