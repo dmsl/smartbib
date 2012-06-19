@@ -310,7 +310,7 @@ class BibTeX_Parser
 								echo "<b>\"".$this->sortedItems[$print][$element]."\"</b> ";
 							}
 							else {
-								echo "<v>\"".$this->sortedItems[$print][$element]."\"</b> ";
+								echo "<b>\"".$this->sortedItems[$print][$element]."\"</b> ";
 							}
 							break;
 						case "journal":
