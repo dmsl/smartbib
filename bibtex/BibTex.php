@@ -1,6 +1,26 @@
 <?php
-/**
- * BibTex Parser 
+/*
+ *
+ * SmartBIB:  The SmartBIB Project allows you to present a BIB database (
+ * .bibtex files) containing your publications on the web. 
+ * It is ideal for personal and project websites.
+ *
+ * Copyright (C) 2012 Georgios Larkou - DMSL - University of Cyprus
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ *
+ * Υou should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 class BibTeX_Parser
 {
@@ -275,26 +295,26 @@ class BibTeX_Parser
 				if(isset($this->sortedItems[$print][$element])){
 					switch ($print) {
 						case "title":
-							echo '<strong>';
+							echo '<strong>"';
 							if(isset($this->sortedItems['durl'][$element])){ 
-								echo '"<a href="'.$this->sortedItems['durl'][$element].'">';
+								echo '<a href="'.$this->sortedItems['durl'][$element].'" class="publications-title" target="_blank">';
 							} 
 							echo $this->sortedItems[$print][$element];
 							if (isset($this->sortedItems['durl'][$element])) {
-								echo '</a>"';
+								echo '</a>';
 							}
-							echo '</strong>'.$delimiter.' ';
+							echo '"</strong>'.$delimiter.' ';
 							break;
 						case "booktitle":
 							if($this->sortedItems['type'][$element] == "editorial") {
-								echo "<i>\"".$this->sortedItems[$print][$element]."\"</i> ";
+								echo "<b>\"".$this->sortedItems[$print][$element]."\"</b> ";
 							}
 							else {
-								echo "<i>".$this->sortedItems[$print][$element]."</i> ";
+								echo "<v>\"".$this->sortedItems[$print][$element]."\"</b> ";
 							}
 							break;
 						case "journal":
-							echo "<i>".$this->sortedItems[$print][$element]."</i> ";
+							echo "<i><b>".$this->sortedItems[$print][$element]."</b></i> ";
 							break;
 						case "year":
 							echo "<strong>".$this->sortedItems[$print][$element]."</strong>".".";
@@ -306,9 +326,9 @@ class BibTeX_Parser
 							break;
 						case "series":
 							if(isset($this->sortedItems['infosite'][$element]))
-								echo "( <i><strong><u><a href='".$this->sortedItems['infosite'][$element]."' class='series-link' target='_blank'>".$this->sortedItems[$print][$element]."</a></u></strong></i> ) ";
+								echo "(<strong><u><a href='".$this->sortedItems['infosite'][$element]."' class='series-link' target='_blank'>".$this->sortedItems[$print][$element]."</a></u></strong>), ";
 							else 
-								echo "<i><strong>".$this->sortedItems[$print][$element]."</strong></i> ";
+								echo "(<strong>".$this->sortedItems[$print][$element]."</strong>), ";
 							break;
 						case "isbn":
 							echo " ISBN: ".$this->sortedItems[$print][$element].$delimiter;
