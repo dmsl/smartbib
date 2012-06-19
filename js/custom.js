@@ -28,7 +28,7 @@ jQuery(document).ready(function(){
 	var $filter 		= $('#publication-filter');
 		  
 	$container.isotope({
-		selector 			: 'li',
+		itemSelector		: 'li',
 		filter				: '*',
 		layoutMode			: 'straightDown',
 		animationEngine 	: 'css'
@@ -37,7 +37,7 @@ jQuery(document).ready(function(){
 	$filter.find('a').click(function(){
 	  var selector = $(this).attr('data-filter');
 		$container.isotope({ 
-		selector 			: 'li',
+		itemSelector   		: 'li',
 		filter				: selector,
 		layoutMode			: 'straightDown',
 		animationEngine 	: 'css'
