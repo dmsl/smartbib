@@ -88,11 +88,11 @@ class BibTeX_Parser
 		rsort($this->yearData);
 		sort($this->reverseYears);
 		
-		print_r($this->reverseYears);
-		
 		global $sortby;
 		
 		$this->sortedItems = $this->array_multisort_by_order($this->items, 'year', $this->reverseYears);
+		
+		print_r($this->sortedItems['year']);
 		
 		$this->sortedItems = $this->array_multisort_by_order($this->sortedItems, 'type', $sortby);
 		
