@@ -88,7 +88,7 @@ class BibTeX_Parser
 		rsort($this->yearData);
 		arsort($this->reverseYears);
 		
-		print_r($this->reverseYears);
+		print_r($this->yearData);
 		
 		global $sortby;
 		
