@@ -32,6 +32,7 @@ class BibTeX_Parser
     var $inputdata;
 	var $yearData;
 	var $lastType;
+	var $reverseYears;
     
     /**
      * BibTeX_Parser( $file, $data )
@@ -82,11 +83,16 @@ class BibTeX_Parser
         $this->parse();
 		
 		$this->yearData = array_unique($this->items['year']);
+		$this->reverseYears = $this->yearData;
+		
+		usort($this->reverseYears);
 		rsort($this->yearData);
+		
+		print_r($this->reverseYears);
 		
 		global $sortby;
 		
-		$this->sortedItems = $this->array_multisort_by_order($this->items, 'year', $this->yearData);
+		$this->sortedItems = $this->array_multisort_by_order($this->items, 'year', $this->reverseYears);
 		
 		$this->sortedItems = $this->array_multisort_by_order($this->sortedItems, 'type', $sortby);
 		
