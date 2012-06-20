@@ -28,7 +28,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>[Zeinalipour's Publications]</title>
 	<script type="text/javascript" src="js/jquery.min.js"></script> 
-    <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
+    <!--<script type="text/javascript" src="js/jquery.isotope.min.js"></script>-->
     <script type="text/javascript" src="js/jquery.tipsy.js"></script> 
     <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>   
     <script type="text/javascript" src="js/custom.js"></script>
@@ -39,6 +39,8 @@
 <body>
 	<h1><a href="http://www.cs.ucy.ac.cy/~dzeina/" target="_blank">Demetris Zeinalipour's</a> Publications</h1>
         <?php
+		error_reporting(E_ALL);
+	     ini_set('display_errors', '1');
 			        
             /*
                 Available Fields: 

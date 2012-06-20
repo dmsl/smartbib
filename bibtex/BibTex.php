@@ -32,7 +32,6 @@ class BibTeX_Parser
     var $inputdata;
 	var $yearData;
 	var $lastType;
-	var $reverseYears;
     
     /**
      * BibTeX_Parser( $file, $data )
@@ -83,20 +82,14 @@ class BibTeX_Parser
         $this->parse();
 		
 		$this->yearData = array_unique($this->items['year']);
-		$this->reverseYears = $this->yearData;
 		
 		rsort($this->yearData);
-		sort($this->reverseYears);
 		
 		global $sortby;
 		
-		$this->sortedItems = $this->array_multisort_by_order($this->items, 'year', $this->reverseYears);
 		
-		print_r($this->sortedItems['year']);
-		
-		$this->sortedItems = $this->array_multisort_by_order($this->sortedItems, 'type', $sortby);
-		
-		//print_r($this->sortedItems['year']);
+		$this->sortedItems = $this->items;
+		//$this->array_multisort_by_order($this->items, 'type', $sortby);
 
 		return $this->printPublications();
     }
@@ -397,23 +390,6 @@ class BibTeX_Parser
 			echo "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
 		}
 	}
-	
-	function sort_by($arr, $sub, $order){
-		// Create a map from old key to new key
-		$value_kmap = array_flip($arr[$sub]);
-		$sort_kmap = array_flip($order);
-		foreach($order as $value)
-			$kmap[$value_kmap[$value]] = $sort_kmap[$value];
-	
-		// Create your result array
-		foreach($arr as $name => $sub_arr)
-			foreach($kmap as $key => $new_key)
-				if(isset($sub_arr[$key]))
-					$result[$name][$new_key] = $sub_arr[$key];
-	
-		return $result;
-	}
-	
 	/**
 	 * @param array $array
 	 * @param string|int $by key/offset
@@ -422,7 +398,7 @@ class BibTeX_Parser
 	 */
 	function array_multisort_by_order(array $array, $by, array $order)
 	{
-		 $max = max(array_map('count',$array));
+		$max = max(array_map('count',$array));
 		foreach($array as &$sub){
 			$addin = array_diff_key(array_fill(0,$max,null),$sub);
 			$sub = $addin + $sub;
