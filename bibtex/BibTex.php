@@ -86,9 +86,11 @@ class BibTeX_Parser
 		
 		global $sortby;
 		
-		$this->sortedItems = @$this->array_multisort_by_order($this->items, 'year', $this->yearData);
+		print_r($this->yearData);
 		
-		$this->sortedItems = $this->array_multisort_by_order($this->items, 'type', $sortby);
+		$this->sortedItems = $this->array_multisort_by_order($this->items, 'year', $this->yearData);
+		
+		$this->sortedItems = $this->array_multisort_by_order($this->sortedItems, 'type', $sortby);
 
 		return $this->printPublications();
     }
