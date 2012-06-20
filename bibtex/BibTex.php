@@ -85,7 +85,7 @@ class BibTeX_Parser
 		$this->yearData = array_unique($this->items['year']);
 		$this->reverseYears = $this->yearData;
 		
-		usort($this->reverseYears);
+		arsort($this->reverseYears);
 		rsort($this->yearData);
 		
 		print_r($this->yearData);
