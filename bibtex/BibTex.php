@@ -88,9 +88,9 @@ class BibTeX_Parser
 		
 		$this->sortedItems = $this->array_multisort_by_order($this->items, 'year', $this->yearData);
 		
-		print_r($this->sortedItems['year']);
-		
 		$this->sortedItems = $this->array_multisort_by_order($this->sortedItems, 'type', $sortby);
+		
+		print_r($this->sortedItems['year']);
 
 		return $this->printPublications();
     }
