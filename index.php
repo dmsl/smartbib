@@ -1,5 +1,6 @@
 <!--/*
  *
+ *    
  * SmartBIB:  The SmartBIB Project allows you to present a BIB database (
  * .bibtex files) containing your publications on the web. 
  * It is ideal for personal and project websites.
