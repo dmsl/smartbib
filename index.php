@@ -28,7 +28,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>[Zeinalipour's Publications]</title>
 	<script type="text/javascript" src="js/jquery.min.js"></script> 
-    <!--<script type="text/javascript" src="js/jquery.isotope.min.js"></script>-->
+    <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
     <script type="text/javascript" src="js/jquery.tipsy.js"></script> 
     <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>   
     <script type="text/javascript" src="js/custom.js"></script>
@@ -122,8 +122,8 @@
 			
 			*/
 			
-			$sortby = array('editorial','book', 'journal', 'conference','theses', 'gconferences');
-			$sortbyTitle = array('Editorials','Book Chapters', 'Journal and Magazine Papers', 'Conference and Workshop Papers', 'Theses', 'Greek Conferences');
+			$sortby = array('book', 'editorial', 'journal', 'conference','theses', 'gconferences');
+			$sortbyTitle = array('Book Chapters', 'Editorials','Journal and Magazine Papers', 'Conference and Workshop Papers', 'Theses', 'Greek Conferences');
                             
             include './bibtex/BibTex.php';				
             /* 

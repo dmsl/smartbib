@@ -89,7 +89,28 @@ class BibTeX_Parser
 		
 		
 		$this->sortedItems = $this->items;
-		//$this->array_multisort_by_order($this->items, 'type', $sortby);
+		
+		for($i=0; $i < count($this->sortedItems['type']); $i++)
+		  foreach($this->sortedItems as $key=> $value) {
+		  	if (isset($value[$i]))  
+				$temp[$i][$key] = $value[$i];
+		  }
+		
+		
+		foreach($temp as $key=>$row) {
+			$types[$key] = array_search($row['type'],$sortby);
+			$years[$key] = $row['year'];
+			$ids[$key] = $key;
+		}
+		array_multisort($types, SORT_ASC, $ids, SORT_ASC, $years, SORT_DESC, $temp);
+		
+		for($i=0; $i < count($temp); $i++)
+		  foreach($temp[$i] as $key=> $value)
+			$temp2[$key][$i] = $value;
+			
+		$this->sortedItems = $temp2;
+		
+		$this->types = $this->sortedItems['type'];
 
 		return $this->printPublications();
     }
@@ -409,9 +430,37 @@ class BibTeX_Parser
 		foreach($params[0] as &$v) $v = $order[$v];
 		foreach($array as &$v) $params[] = &$v; unset($v);
 		call_user_func_array('array_multisort', $params);
+		
+		//Convert array
+		for($i=0; $i < count($array['type']); $i++) {
+			foreach($array as $key=> $value) {
+				$temp[$i][$key] = $value[$i];
+			}
+		}
+		
+		function cmp_year($a, $b) {
+			if ($a['type'] == $b['type']) {
+				return ($a['year'] > $b['year']) ? -1 : 1;
+			}
+			else 
+				return 0;
+		}
+
+		usort($temp, 'cmp_year');
+
+		//Convert array back
+		for($i=0; $i < count($temp); $i++) {
+			foreach($temp[$i] as $key=> $value) {
+				$temporary[$key][$i] = $value;
+			}
+		}
+		
+		print_r($temporary['year']);
+		print_r($temporary['type']);
+		
 		$filter = create_function('$a','return !is_null($a);');
-		foreach($array as &$sub) $sub = array_filter($sub,$filter);
-		return $array;
+		foreach($temporary as &$sub) $sub = array_filter($sub,$filter);
+		return $temporary;
 	}
 	
 	function getTitle ($type) {
