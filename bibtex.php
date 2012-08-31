@@ -255,6 +255,9 @@
             
             for ($i = 0; $i <= $this->count; $i++ ) {
                 switch ($this->types[$i]) {
+                    case "journal":
+                        $this->htmlPublication("journal", $article, $i);
+                        break;                        
                     case "article":
                         $this->htmlPublication("article", $article, $i);
                         break;
