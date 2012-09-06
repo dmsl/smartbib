@@ -124,6 +124,8 @@
     
     $sortby = array('journal', 'conference', 'book', 'editorial', 'theses', 'gconferences');
     $sortbyTitle = array('Journal and Magazine Papers', 'Conference and Workshop Papers', 'Book Chapters', 'Editorials','Theses', 'Greek Conferences');
+	
+	$projects = array('all');
     
     include 'bibtex.php';				
     /* 
@@ -131,7 +133,7 @@
      Enter the location of your BibTex file
      
      */
-    $bibTexFile = 'demo.bib';
+    $bibTexFile = 'http://www.cs.ucy.ac.cy/~dzeina/publications/demo.bib';
     
     $bibTex = new BibTeX_Parser();
     $bibTex->parser($file = $bibTexFile); 

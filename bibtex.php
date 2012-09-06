@@ -242,6 +242,7 @@
             global $techreport;
             global $unpublished;
             global $other;
+			global $projects;
             
             //Print filters 
             echo '<ul id="publication-filter">';
@@ -254,56 +255,58 @@
             echo '<ul id="publication-list">';
             
             for ($i = 0; $i <= $this->count; $i++ ) {
-                switch ($this->types[$i]) {
-                    case "journal":
-                        $this->htmlPublication("journal", $article, $i);
-                        break;                        
-                    case "article":
-                        $this->htmlPublication("article", $article, $i);
-                        break;
-                    case "book":
-                        $this->htmlPublication("book", $book, $i);
-                        break;
-                    case "booklet":
-                        $this->htmlPublication("booklet", $article, $i);
-                        break;
-                    case "conference":
-                        $this->htmlPublication("conference", $conference, $i);
-                        break;
-                    case "inbook":
-                        $this->htmlPublication("inbook", $inbook, $i);
-                        break;
-                    case "incollection":
-                        $this->htmlPublication("incollection", $incollection, $i);
-                        break;
-                    case "inproceedings":
-                        $this->htmlPublication("inproceedings", $inproceedings, $i);
-                        break;
-                    case "manual":
-                        $this->htmlPublication("inbook", $manual, $i);
-                        break;
-                    case "mastersthesis":
-                        $this->htmlPublication("mastersthesis", $matersthesis, $i);
-                        break;
-                    case "misc":
-                        $this->htmlPublication("misc", $misc, $i);
-                        break;
-                    case "phdthesis":
-                        $this->htmlPublication("phdthesis", $phdthesis, $i);
-                        break;
-                    case "proceedings":
-                        $this->htmlPublication("proceedings", $proceedings, $i);
-                        break;
-                    case "techreport":
-                        $this->htmlPublication("techreport", $techreport, $i);
-                        break;
-                    case "unpublished":
-                        $this->htmlPublication("unpublished", $unpublished, $i);
-                        break;
-                    default:
-                        $this->htmlPublication("other", $other, $i);
-                        
-                }
+				if (in_array("all", $projects) || checkProject($i)) {
+					switch ($this->types[$i]) {
+						case "journal":
+							$this->htmlPublication("journal", $article, $i);
+							break;                        
+						case "article":
+							$this->htmlPublication("article", $article, $i);
+							break;
+						case "book":
+							$this->htmlPublication("book", $book, $i);
+							break;
+						case "booklet":
+							$this->htmlPublication("booklet", $article, $i);
+							break;
+						case "conference":
+							$this->htmlPublication("conference", $conference, $i);
+							break;
+						case "inbook":
+							$this->htmlPublication("inbook", $inbook, $i);
+							break;
+						case "incollection":
+							$this->htmlPublication("incollection", $incollection, $i);
+							break;
+						case "inproceedings":
+							$this->htmlPublication("inproceedings", $inproceedings, $i);
+							break;
+						case "manual":
+							$this->htmlPublication("inbook", $manual, $i);
+							break;
+						case "mastersthesis":
+							$this->htmlPublication("mastersthesis", $matersthesis, $i);
+							break;
+						case "misc":
+							$this->htmlPublication("misc", $misc, $i);
+							break;
+						case "phdthesis":
+							$this->htmlPublication("phdthesis", $phdthesis, $i);
+							break;
+						case "proceedings":
+							$this->htmlPublication("proceedings", $proceedings, $i);
+							break;
+						case "techreport":
+							$this->htmlPublication("techreport", $techreport, $i);
+							break;
+						case "unpublished":
+							$this->htmlPublication("unpublished", $unpublished, $i);
+							break;
+						default:
+							$this->htmlPublication("other", $other, $i);
+							
+					}
+				}
             }
             echo '</ul>';
             echo '<center><small>Automatically generated from this <a href="demo.bib">bibtex</a> using the <a target=_blank href="http://dmsl.github.com/smartbib/">Smarbib</a> project</small></center>';
@@ -479,5 +482,19 @@
             }
             
         }
+		
+		function checkProject($element) {
+			
+			global $projects;
+			
+			if(isset($this->sortedItems['projects'][$element])) {
+				$p = explode(" ", $this->sortedItems['projects'][$element]);
+				foreach ($p as $project) {
+					if(in_array($project, $projects))
+						return true;
+				}
+			}
+			return false;
+		}
     }
     ?>
