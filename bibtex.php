@@ -243,6 +243,7 @@
             global $unpublished;
             global $other;
 			global $projects;
+			global $bibTexFile;
             
             //Print filters 
             echo '<ul id="publication-filter">';
@@ -255,7 +256,7 @@
             echo '<ul id="publication-list">';
             
             for ($i = 0; $i <= $this->count; $i++ ) {
-				if (in_array("all", $projects) || checkProject($i)) {
+				if (in_array("all", $projects) || $this->checkProject($i)) {
 					switch ($this->types[$i]) {
 						case "journal":
 							$this->htmlPublication("journal", $article, $i);
@@ -309,7 +310,7 @@
 				}
             }
             echo '</ul>';
-            echo '<center><small>Automatically generated from this <a href="demo.bib">bibtex</a> using the <a target=_blank href="http://dmsl.github.com/smartbib/">Smarbib</a> project</small></center>';
+            echo '<center><small>Automatically generated from this <a href="'.$bibTexFile.'" target="_blank" >bibtex</a> using the <a target=_blank href="http://dmsl.github.com/smartbib/">Smarbib</a> project</small></center>';
         }
         
         function htmlPublication($type, $fields, $element) {
