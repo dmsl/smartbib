@@ -30,8 +30,9 @@
         var $types;
         var $filename;
         var $inputdata;
-        var $yearData;
+        var $yearData = array();
         var $lastType;
+		var $resultedHtml;
         
         /**
          * BibTeX_Parser( $file, $data )
@@ -81,10 +82,6 @@
             
             $this->parse();
             
-            $this->yearData = array_unique($this->items['year']);
-            
-            rsort($this->yearData);
-            
             global $sortby;
             
             
@@ -112,7 +109,13 @@
             
             $this->types = $this->sortedItems['type'];
             
-            return $this->printPublications();
+            $this->prepareHTML();
+			
+			$this->yearData = array_unique($this->yearData);
+            
+            rsort($this->yearData);
+			
+			return $this-> printPublications();
         }
         
         /**
@@ -226,7 +229,7 @@
             }
         }
         
-        function printPublications() {
+        function prepareHTML() {
             global $article;
             global $book;
             global $booklet;
@@ -245,15 +248,7 @@
 			global $projects;
 			global $bibTexFile;
             
-            //Print filters 
-            echo '<ul id="publication-filter">';
-            echo '<li><a href="#" class="current" data-filter="*">All</a></li>';
-            for($i = 0; $i < count($this->yearData); $i++) {
-                echo '<li><a href="#" data-filter=".'.$this->yearData[$i].'">'.$this->yearData[$i].'</a></li>';
-            }
-            echo '</ul>';
-            echo '<div style="clear:both;"></div>';
-            echo '<ul id="publication-list">';
+            $this->resultedHtml .= '<ul id="publication-list">';
             
             for ($i = 0; $i <= $this->count; $i++ ) {
 				if (in_array("all", $projects) || $this->checkProject($i)) {
@@ -309,8 +304,8 @@
 					}
 				}
             }
-            echo '</ul>';
-            echo '<center><small>Automatically generated from this <a href="'.$bibTexFile.'" target="_blank" >bibtex</a> using the <a target=_blank href="http://dmsl.github.com/smartbib/">Smarbib</a> project</small></center>';
+            $this->resultedHtml .= '</ul>';
+            $this->resultedHtml .= '<center><small>Automatically generated from this <a href="'.$bibTexFile.'" target="_blank" >bibtex</a> using the <a target=_blank href="http://dmsl.github.com/smartbib/">Smarbib</a> project</small></center>';
         }
         
         function htmlPublication($type, $fields, $element) {
@@ -319,67 +314,68 @@
             $delimiter=", ";
             if ($this->lastType != $this->sortedItems['type'][$element]){
                 $this->lastType = $this->sortedItems['type'][$element];
-                echo '<li><h2>'.$this->getTitle($this->sortedItems['type'][$element]).'</h2></li>';
+                $this->resultedHtml .= '<li><h2>'.$this->getTitle($this->sortedItems['type'][$element]).'</h2></li>';
             }
-            echo '<li class="'.$this->sortedItems['year'][$element].' publication" title="'.$this->sortedItems['year'][$element].'">';        
+            $this->resultedHtml .= '<li class="'.$this->sortedItems['year'][$element].' publication" title="'.$this->sortedItems['year'][$element].'">';        
             $this->countTypes($element, $this->sortedItems['type'][$element]);         
             foreach($fields as $print) {
                 if(isset($this->sortedItems[$print])){
                     if(isset($this->sortedItems[$print][$element])){
                         switch ($print) {
                             case "title":
-                                echo '<strong>"';
+                                $this->resultedHtml .= '<strong>"';
                                 if(isset($this->sortedItems['durl'][$element])){ 
-                                    echo '<a href="'.$this->sortedItems['durl'][$element].'" class="publications-title" target="_blank">';
+                                    $this->resultedHtml .= '<a href="'.$this->sortedItems['durl'][$element].'" class="publications-title" target="_blank">';
                                 } 
-                                echo $this->sortedItems[$print][$element];
+                                $this->resultedHtml .= $this->sortedItems[$print][$element];
                                 if (isset($this->sortedItems['durl'][$element])) {
-                                    echo '</a>';
+                                    $this->resultedHtml .= '</a>';
                                 }
-                                echo '"</strong>'.$delimiter.' ';
+                                $this->resultedHtml .= '"</strong>'.$delimiter.' ';
                                 break;
                             case "booktitle":
                                 if($this->sortedItems['type'][$element] == "editorial") {
-                                    echo "<b>\"".$this->sortedItems[$print][$element]."\"</b> ";
+                                    $this->resultedHtml .= "<b>\"".$this->sortedItems[$print][$element]."\"</b> ";
                                 }
                                 else {
-                                    echo "<b>\"".$this->sortedItems[$print][$element]."\"</b> ";
+                                    $this->resultedHtml .= "<b>\"".$this->sortedItems[$print][$element]."\"</b> ";
                                 }
                                 break;
                             case "journal":
-                                echo "<i><b>".$this->sortedItems[$print][$element]."</b></i> ";
+                                $this->resultedHtml .= "<i><b>".$this->sortedItems[$print][$element]."</b></i> ";
                                 break;
                             case "year":
-                                echo "<strong>".$this->sortedItems[$print][$element]."</strong>".".";
+                                $this->resultedHtml .= "<strong>".$this->sortedItems[$print][$element]."</strong>".".";
+								array_push($this->yearData, $this->sortedItems[$print][$element]);
                                 break;
                             case "numpages":
-                                echo $this->sortedItems[$print][$element].$delimiter;
+                                $this->resultedHtml .= $this->sortedItems[$print][$element].$delimiter;
                             case "pages":
-                                echo " Pages: ".$this->sortedItems[$print][$element].$delimiter;
+                                $this->resultedHtml .= " Pages: ".$this->sortedItems[$print][$element].$delimiter;
                                 break;
                             case "series":
                                 if(isset($this->sortedItems['infosite'][$element]))
-                                    echo "(<strong><u><a href='".$this->sortedItems['infosite'][$element]."' class='series-link' target='_blank'>".$this->sortedItems[$print][$element]."</a></u></strong>), ";
+                                    $this->resultedHtml .= "(<strong><u><a href='".$this->sortedItems['infosite'][$element]."' class='series-link' target='_blank'>".$this->sortedItems[$print][$element]."</a></u></strong>), ";
                                 else 
-                                    echo "(<strong>".$this->sortedItems[$print][$element]."</strong>), ";
+                                    $this->resultedHtml .= "(<strong>".$this->sortedItems[$print][$element]."</strong>), ";
                                 break;
                             case "isbn":
-                                echo " ISBN: ".$this->sortedItems[$print][$element].$delimiter;
+                                $this->resultedHtml .= " ISBN: ".$this->sortedItems[$print][$element].$delimiter;
                                 break;
                             case "volume":
-                                echo " Volume ".$this->sortedItems[$print][$element].$delimiter;
+                                $this->resultedHtml .= " Volume ".$this->sortedItems[$print][$element].$delimiter;
                                 break;
                             case "chapter":
-                                echo " Chapter ".$this->sortedItems[$print][$element].$delimiter;
+                                $this->resultedHtml .= " Chapter ".$this->sortedItems[$print][$element].$delimiter;
                                 break;
                             case "author":
-                                echo $this->sortedItems[$print][$element]." ";
+                                $this->resultedHtml .= $this->sortedItems[$print][$element]." ";
                                 break;
                             case "location":
-                                echo $this->sortedItems[$print][$element]." ";
+                                $this->resultedHtml .= $this->sortedItems[$print][$element]." ";
                                 break;
                             default:
-                                echo $this->sortedItems[$print][$element].$delimiter;
+                                $this->resultedHtml .= $this->sortedItems[$print][$element].$delimiter;
                         }
                     }
                 }
@@ -388,20 +384,20 @@
                 }
             }
             if (isset($this->sortedItems['raw'][$element])) {
-                echo '<a href="#bibtex-'.$element.'" class="publications-bib" title="BibTex" id="publink-'.$element.'" href="#" title="BibTex Reference"></a>';
-                echo '<div id="bibtex-wrapper" style="display:none;"><div id="bibtex-'.$element.'" style="width:700px;"><pre>'.$this->sortedItems['raw'][$element].'</pre></div></div>';
+                $this->resultedHtml .= '<a href="#bibtex-'.$element.'" class="publications-bib" title="BibTex" id="publink-'.$element.'" href="#" title="BibTex Reference"></a>';
+                $this->resultedHtml .= '<div id="bibtex-wrapper" style="display:none;"><div id="bibtex-'.$element.'" style="width:700px;"><pre>'.$this->sortedItems['raw'][$element].'</pre></div></div>';
             }
             if (isset($this->sortedItems['durl'][$element])) {
-                echo '<a href="'.$this->sortedItems['durl'][$element].'" class="publications-pdf" id="publink-'.$element.'" href="#" title="Download PDF" target="_blank"></a>';
+                $this->resultedHtml .= '<a href="'.$this->sortedItems['durl'][$element].'" class="publications-pdf" id="publink-'.$element.'" href="#" title="Download PDF" target="_blank"></a>';
             }
             if (isset($this->sortedItems['powerpoint'][$element])) {
-                echo '<a href="'.$this->sortedItems['powerpoint'][$element].'" class="publications-ppt" id="publink-'.$element.'" href="#" title="Presentation" target="_blank"></a>';
-                echo '<div id="ppt-wrapper" style="display:none;"><div id="powerpoint-'.$element.'"><embed src="'.$this->sortedItems['powerpoint'][$element].'"  type="application/ppt" width="840" height="680" /></div></div>';
+                $this->resultedHtml .= '<a href="'.$this->sortedItems['powerpoint'][$element].'" class="publications-ppt" id="publink-'.$element.'" href="#" title="Presentation" target="_blank"></a>';
+                $this->resultedHtml .= '<div id="ppt-wrapper" style="display:none;"><div id="powerpoint-'.$element.'"><embed src="'.$this->sortedItems['powerpoint'][$element].'"  type="application/ppt" width="840" height="680" /></div></div>';
             }
             if (isset($this->sortedItems['website'][$element])) {
-                echo '<a href="'.$this->sortedItems['website'][$element].'" class="publications-website" id="publink-'.$element.'" href="#" title="Relevant Website" target="_blank"></a>';
+                $this->resultedHtml .= '<a href="'.$this->sortedItems['website'][$element].'" class="publications-website" id="publink-'.$element.'" href="#" title="Relevant Website" target="_blank"></a>';
             }
-            echo '</li>';
+            $this->resultedHtml .= '</li>';
         }
         
         function countTypes($iterator, $type) {
@@ -411,13 +407,26 @@
             
             $number = $all[$type] - $counts[$type] + 1;
             if($type == 'book') {
-                echo "<strong>[B".$number."]</strong> ";
+                $this->resultedHtml .=  "<strong>[B".$number."]</strong> ";
                 
             }
             else {
-                echo "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
+                $this->resultedHtml .=  "<strong>[".ucfirst(substr($type, 0, 1))."".$number."]</strong> ";
             }
         }
+		
+		function printPublications() {
+			//Print filters 
+            echo '<ul id="publication-filter">';
+            echo '<li><a href="#" class="current" data-filter="*">All</a></li>';
+            for($i = 0; $i < count($this->yearData); $i++) {
+                echo '<li><a href="#" data-filter=".'.$this->yearData[$i].'">'.$this->yearData[$i].'</a></li>';
+            }
+            echo '</ul>';
+			echo '<div style="clear:both;"></div>';
+			echo $this->resultedHtml;
+		}
+		
         /**
          * @param array $array
          * @param string|int $by key/offset
