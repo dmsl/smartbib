@@ -215,10 +215,10 @@
                     $v=str_replace('=','',$v);
                     $v=str_replace('{','',$v);
                     $v=str_replace('}','',$v);
-                    if ($var[$fieldcount]=='author' || $var[$fieldcount]=='location' ) 
-                        $v=str_replace(',',', ',$v);
-                    else
+                    if ($var[$fieldcount]=='projects') 
                         $v=str_replace(',',' ',$v);
+                    else
+                        $v=$this->str_last_replace(',',' ',$v);
                     $v=str_replace('\'',' ',$v);
                     $v=str_replace('\"',' ',$v);
                     // test!
@@ -505,6 +505,18 @@
 				}
 			}
 			return false;
+		}
+		
+		function str_last_replace($search, $replace, $subject)
+		{
+			$pos = strrpos($subject, $search);
+		
+			if($pos !== false)
+			{
+				$subject = substr_replace($subject, $replace, $pos, strlen($search));
+			}
+		
+			return $subject;
 		}
     }
     ?>
